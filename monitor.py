@@ -2,6 +2,7 @@ from cpu import get_cpu_usage_percent
 from memory import get_memory_usage
 from disk import get_disk_usage
 from utils import kb_to_gb, bytes_to_gb, format_percent
+from processes import get_top_processes_by_memory
 
 
 def main():
@@ -21,6 +22,11 @@ def main():
     print(
         f"Disk (/): {bytes_to_gb(disk_used_b)} GB used / {bytes_to_gb(disk_total_b)} GB total"
     )
+
+    print("\nTop Processes by Memory (RSS):")
+    top = get_top_processes_by_memory(limit=5)
+    for pid, name, mem_kb in top:
+        print(f"- PID {pid} | {name} | {kb_to_gb(mem_kb)} GB")
 
 
 if __name__ == "__main__":
